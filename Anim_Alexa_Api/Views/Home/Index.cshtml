@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<h3 class="row">
+    Click below to load data from AWS Lambda function:
+</h3>
+
+<p><button class="btn btn-primary" id="load">Load</button></p>
+<div id="textJson"></div>
+
+
+@section scripts{
+    <script>
+        document.getElementById('load').addEventListener('click', () => {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById('textJson').innerHTML = this.responseText;
+                }
+            };
+            xhr.open('get', '/api/getAwsObject');
+            document.getElementById('textJson').innerHTML = "loading...";
+            xhr.send();
+        });
+    </script>
+}
